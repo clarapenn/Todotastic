@@ -1,0 +1,6 @@
+{% for todo in todos %}
+<div>
+  <p>{{ todo.task }}</p>
+  <span>Completed? {{ todo.completed|yesno }}</span>
+</div>
+{% empty %} No to-dos! {% endfor %}
