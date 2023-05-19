@@ -1,0 +1,15 @@
+<div>
+  <p>{{ todo.task }}</p>
+  <span>Completed? {{ todo.completed|yesno }}</span>
+  <span>Date completed {{ todo.date_completed|date }}</span>
+  <span>Date created {{ todo.date_created|date }}</span>
+</div>
+
+<ul>
+    <li>
+        <a href="{% url "todo-list" %}">back to list</a>
+    </li>
+    <li>
+        <a href="{% url "todo-edit" todo.id %}">edit this todo</a>
+    </li>
+</ul>
