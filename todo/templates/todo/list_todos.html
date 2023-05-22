@@ -3,14 +3,26 @@
 {% block pagetitle %} All the things {% endblock pagetitle %}
 
 {% block content %}
-{% for todo in todos %}
-<div>
-    <p>
-        <a href="{% url "todo-detail" todo.id %}">
-            {{ todo.task|truncatechars:10 }}
-        </a>
-    </p>
-    <span>Completed? {{ todo.completed|yesno }}</span>
+
+<div class="container">
+    <div class="row align-items-start">
+        <div class="col-8 list-main-col-8">
+            <ul class="list-group my-3">
+            {% for todo in todos %}
+            <li class="list-group-item">
+                <a href="{% url "todo-detail" todo.id %}">
+                    {{ todo.task|truncatechars:90 }}
+                </a>
+                <span>Completed? {{ todo.completed|yesno }}</span>
+            </li>
+            {% empty %}
+                <li class="list-group-item">No to-dos!</li>
+            {% endfor %}
+            </ul>
+        </div>
+        <div class="col-4">
+            <p class="list-group my-3">Extra features coming soon!</p>
+        </div>
+    </div>
 </div>
-{% empty %} No to-dos! {% endfor %}
 {% endblock content %}
