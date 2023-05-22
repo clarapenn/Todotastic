@@ -118,6 +118,12 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
+STATICFILES_DIRS = [
+    # BASE_DIR is todotastic_root, so we want to go down into todotastic to get its static dir
+    BASE_DIR
+    / "todotastic"
+    / "static"
+]
 STATIC_URL = "/static/"
 
 # Default primary key field type
