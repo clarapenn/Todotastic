@@ -1,3 +1,6 @@
+{% extends "base.html" %}
+
+{% block content %}
 <div>
   <p>{{ todo.task }}</p>
   <span>Completed? {{ todo.completed|yesno }}</span>
@@ -13,3 +16,4 @@
         <a href="{% url "todo-edit" todo.id %}">edit this todo</a>
     </li>
 </ul>
+{% endblock content%}

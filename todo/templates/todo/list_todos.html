@@ -1,3 +1,8 @@
+{% extends "base.html" %}
+
+{% block pagetitle %} All the things {% endblock pagetitle %}
+
+{% block content %}
 {% for todo in todos %}
 <div>
     <p>
@@ -8,3 +13,4 @@
     <span>Completed? {{ todo.completed|yesno }}</span>
 </div>
 {% empty %} No to-dos! {% endfor %}
+{% endblock content %}
