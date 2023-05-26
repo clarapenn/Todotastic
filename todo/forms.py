@@ -1,5 +1,6 @@
 from django import forms
 from todo.models import Todo
+import datetime
 
 
 class TodoForm(forms.ModelForm):
@@ -39,3 +40,38 @@ class TodoForm(forms.ModelForm):
         self.fields["task"].widget.attrs.update({"class": "form-control"})
         self.fields["completed"].widget.attrs.update({"class": "form-check-input"})
 
+
+class CompletionForm(forms.ModelForm):
+    class Meta:
+        model = Todo
+        fields = ("id",)
+
+    def save(self, *args, **kwargs):
+
+        # Use the modelform's save() method to get us an updated _but unsaved_ todo instance
+        # (the commit=False is what stops the actual save to the database)
+        updated_todo = super().save(*args, commit=False, **kwargs)
+
+        # updated_todo can be edited/changed as we need, so let's force it to be completed
+        # and use today as the date of completion
+        updated_todo.completed = True
+        updated_todo.date_completed = datetime.date.today()
+
+        # And now we can save it to the database, including the values we slotted in for
+        # completed and date_completed
+        updated_todo.save()
+        return updated_todo
+
+
+class AddForm(forms.ModelForm):
+    class Meta:
+        model = Todo
+        fields = ("task",)
+
+    def __init__(self, *args, **kwargs):
+        # First, call the real constructor from the base class, so that
+        # we initialise a form object. so that we can add extra attributes
+        # to the fields it will render.
+        super().__init__(*args, **kwargs)
+
+        self.fields["task"].widget.attrs.update({"class": "form-control"})

@@ -1,3 +1,7 @@
 .list-main-col-8 {
   padding-left: 0;
 }
+
+.todo-completion-button {
+  text-align: right;
+}

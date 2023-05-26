@@ -29,8 +29,9 @@
                 <a class="nav-link" href="#">Link A</a>
               </li> {% endcomment %}
             </ul>
-            <form class="d-flex" role="search">
-              <input class="form-control me-2 mt-2" placeholder="Add a todo!" aria-label="Add a todo">
+            <form class="d-flex" action="{% url 'todo-add' %}" method="post">
+                {% csrf_token %}
+              <input class="form-control me-2 mt-2" placeholder="Add a todo!" aria-label="Add a todo" name="task">
               <button class="btn btn-outline-success mt-2" type="submit"><strong>+</strong></button>
             </form>
           </div>

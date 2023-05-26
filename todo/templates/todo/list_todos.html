@@ -10,10 +10,29 @@
             <ul class="list-group my-3">
             {% for todo in todos %}
             <li class="list-group-item">
-                <a href="{% url "todo-detail" todo.id %}">
-                    {{ todo.task|truncatechars:90 }}
-                </a>
-                <span>Completed? {{ todo.completed|yesno }}</span>
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-6">
+                            <a href="{% url "todo-detail" todo.id %}">
+                                {{ todo.task|truncatechars:90 }}
+                            </a>
+                        </div>
+                        <div class="col-6 todo-completion-button">
+                            <span>
+                                {% if todo.completed %}
+                                Done on {{ todo.date_completed|date|default:"who knows!" }}
+                                {% endif %}
+                            </span>
+                            {% if not todo.completed %}
+                            <form action="{% url 'todo-complete' todo.id %}" method="POST">
+                                {% csrf_token %}
+                                <input type="hidden" name="id" value={{todo.id}}>
+                                <button class="btn btn-primary btn-sm">Mark done</button>
+                            </form>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
             </li>
             {% empty %}
                 <li class="list-group-item">No to-dos!</li>
@@ -26,3 +45,13 @@
     </div>
 </div>
 {% endblock content %}
+
+
+{% comment "Alterative way to do the above without |default" %}
+on
+{% if todo.date_completed %}
+    {{ todo.date_completed|date }}
+{% else %}
+    who knows!
+{% endif %}
+{% endcomment %}
