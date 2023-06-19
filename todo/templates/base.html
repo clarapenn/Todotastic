@@ -39,6 +39,15 @@
       </nav>
 
     <main>
+        <div class='messages-wrapper mt-3'>
+        {% if messages %}
+            {% for message in messages %}
+                <div{% if message.tags %} class="{{ message.tags }}"{% endif %}>
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+        </div>
         {% block content %} {% endblock content %}
     </main>
 

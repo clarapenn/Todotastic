@@ -2,6 +2,7 @@ from django.shortcuts import redirect, render, get_object_or_404
 from todo.models import Todo
 from todo.forms import TodoForm, CompletionForm, AddForm
 from django.views.decorators.http import require_POST
+from django.contrib import messages
 
 
 def list_todos(request):
@@ -34,10 +35,12 @@ def todo_add_edit(request, todo_id=None):
         todo = get_object_or_404(Todo, id=todo_id)
         form_class = TodoForm
         redirect_args = ("todo-detail", todo_id)
+        success_message = "Todo updated!"
     else:
         todo = None
         form_class = AddForm
         redirect_args = ("todo-list",)
+        success_message = "It's on the list!"
 
     # If the user has submitted the form, that will be
     # with a POST request. Let's process that submitted data
@@ -49,6 +52,7 @@ def todo_add_edit(request, todo_id=None):
             # which updates the fields of the todo instance we passed in
             # when we made the form a few lines earlier
 
+            messages.success(request, success_message, extra_tags="alert alert-success")
             # After editing, send the user to a page where they can see the result
             return redirect(*redirect_args)
         else:
