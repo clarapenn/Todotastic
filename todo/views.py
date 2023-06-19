@@ -10,7 +10,25 @@ def list_todos(request):
     template_name = "todo/list_todos.html"
 
     todos = Todo.objects.all().order_by("-date_created")
-    context = {"todos": todos}
+
+    all_todos_count = todos.count()  # effectively same as Todo.objects.all().count()
+
+    completed_todos_count = Todo.objects.filter(completed=True).count()
+    incomplete_todos_count = Todo.objects.filter(completed=False).count()
+    # Or could do it with exclude, which is like the opposite of filter()
+    # incomplete_todos_count = Todo.objects.exclude(completed=True).count()
+
+    try:
+        percentage_complete = completed_todos_count / all_todos_count * 100
+    except ZeroDivisionError:
+        percentage_complete = 0
+
+    context = {
+        "todos": todos,
+        "completed_todos_count": completed_todos_count,
+        "incomplete_todos_count": incomplete_todos_count,
+        "percentage_complete": int(percentage_complete),
+    }
 
     return render(request, template_name, context)
 
@@ -51,7 +69,6 @@ def todo_add_edit(request, todo_id=None):
             # because this is a ModelForm, it has a save method,
             # which updates the fields of the todo instance we passed in
             # when we made the form a few lines earlier
-
             messages.success(request, success_message, extra_tags="alert alert-success")
             # After editing, send the user to a page where they can see the result
             return redirect(*redirect_args)
