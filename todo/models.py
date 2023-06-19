@@ -1,3 +1,5 @@
+import datetime
+
 from django.db import models
 
 
@@ -12,3 +14,13 @@ class Todo(models.Model):
 
     def __str__(self):
         return f"Todo {self.id}: {self.task}"
+
+    def mark_complete(self):
+        self.completed = True
+        self.date_completed = datetime.date.today()
+        self.save()
+
+    def mark_incomplete(self):
+        self.completed = False
+        self.date_completed = None
+        self.save()

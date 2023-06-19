@@ -18,13 +18,17 @@
                             </a>
                         </div>
                         <div class="col-6 todo-completion-button">
+                            {% if todo.completed %}
                             <span>
-                                {% if todo.completed %}
                                 Done on {{ todo.date_completed|date|default:"who knows!" }}
-                                {% endif %}
+                                <form action="{% url 'todo-complete-toggle' todo.id %}" class="inline-form" method="POST">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="id" value={{todo.id}}>
+                                    <button class="btn btn-secondary btn-sm">Undo</button>
+                                </form>
                             </span>
-                            {% if not todo.completed %}
-                            <form action="{% url 'todo-complete' todo.id %}" method="POST">
+                            {% else %}
+                            <form action="{% url 'todo-complete-toggle' todo.id %}" method="POST">
                                 {% csrf_token %}
                                 <input type="hidden" name="id" value={{todo.id}}>
                                 <button class="btn btn-primary btn-sm">Mark done</button>

@@ -44,23 +44,27 @@ class TodoForm(forms.ModelForm):
 class CompletionForm(forms.ModelForm):
     class Meta:
         model = Todo
-        fields = ("id",)
+        fields = (
+            "id",
+        )  # TODO: use this ID to verify the Todo we're updating is definitely the right one.
 
-    def save(self, *args, **kwargs):
+    # Saving logic has been moved to the model
 
-        # Use the modelform's save() method to get us an updated _but unsaved_ todo instance
-        # (the commit=False is what stops the actual save to the database)
-        updated_todo = super().save(*args, commit=False, **kwargs)
+    # def save(self, *args, **kwargs):
 
-        # updated_todo can be edited/changed as we need, so let's force it to be completed
-        # and use today as the date of completion
-        updated_todo.completed = True
-        updated_todo.date_completed = datetime.date.today()
+    #     # Use the modelform's save() method to get us an updated _but unsaved_ todo instance
+    #     # (the commit=False is what stops the actual save to the database)
+    #     updated_todo = super().save(*args, commit=False, **kwargs)
 
-        # And now we can save it to the database, including the values we slotted in for
-        # completed and date_completed
-        updated_todo.save()
-        return updated_todo
+    #     # updated_todo can be edited/changed as we need, so let's force it to be completed
+    #     # and use today as the date of completion
+    #     updated_todo.completed = True
+    #     updated_todo.date_completed = datetime.date.today()
+
+    #     # And now we can save it to the database, including the values we slotted in for
+    #     # completed and date_completed
+    #     updated_todo.save()
+    #     return updated_todo
 
 
 class AddForm(forms.ModelForm):

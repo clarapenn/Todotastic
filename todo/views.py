@@ -80,5 +80,24 @@ def toggle_completion(request, todo_id):
     form = CompletionForm(request.POST, instance=todo)
 
     if form.is_valid():
-        form.save()
+        # All ok so let's mark the todo as completed
+
+        if todo.completed:
+            todo.mark_incomplete()
+
+            messages.info(
+                request,
+                f"{todo.task}: back on the list!",
+                extra_tags="alert alert-info",
+            )
+        else:
+            todo.mark_complete()
+
+            messages.success(
+                request,
+                f"{todo.task}: done!!",
+                extra_tags="alert alert-success",
+            )
+
+    return redirect("todo-list")
     return redirect("todo-list")

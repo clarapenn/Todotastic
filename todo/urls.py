@@ -6,5 +6,9 @@ urlpatterns = [
     path("todo/add/", todo_add_edit, name="todo-add"),
     path("todo/<int:todo_id>/", todo_detail, name="todo-detail"),
     path("todo/<int:todo_id>/edit/", todo_add_edit, name="todo-edit"),
-    path("todo/<int:todo_id>/complete/", toggle_completion, name="todo-complete"),
+    path(
+        "todo/<int:todo_id>/complete/toggle/",
+        toggle_completion,
+        name="todo-complete-toggle",
+    ),
 ]
