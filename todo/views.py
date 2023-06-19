@@ -1,6 +1,6 @@
 from django.shortcuts import redirect, render, get_object_or_404
 from todo.models import Todo
-from todo.forms import TodoForm, CompletionForm, AddForm
+from todo.forms import TodoForm, CompletionForm, AddForm, DeletionForm
 from django.views.decorators.http import require_POST
 from django.contrib import messages
 
@@ -100,4 +100,38 @@ def toggle_completion(request, todo_id):
             )
 
     return redirect("todo-list")
+
+
+@require_POST
+def todo_delete(request, todo_id):
+
+    todo = get_object_or_404(Todo, id=todo_id)
+
+    form = DeletionForm(request.POST, instance=todo)
+
+    if form.is_valid():
+
+        # form.data is the data from request.POST, before cleaning
+        # cleaned_data is the checked version of what we got in request.POST
+        submitted_data = form.data
+        submitted_todo_id = submitted_data["id"]
+
+        # raw data is always a string, but todo_id is an int, and we need to
+        # compare like with like
+        if submitted_todo_id != str(todo_id):
+            # someone has been tampering with the page because the todos don't match
+            messages.warning(
+                request,
+                "Tampering detected",
+                extra_tags="alert alert-warning",
+            )
+        else:
+            # All ok so let's mark the todo as deleted
+            todo.delete()
+
+            messages.success(
+                request,
+                f"{todo.task}: deleted",
+                extra_tags="alert alert-success",
+            )
     return redirect("todo-list")

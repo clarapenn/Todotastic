@@ -79,3 +79,9 @@ class AddForm(forms.ModelForm):
         super().__init__(*args, **kwargs)
 
         self.fields["task"].widget.attrs.update({"class": "form-control"})
+
+
+class DeletionForm(forms.ModelForm):
+    class Meta:
+        model = Todo
+        fields = ("id",)

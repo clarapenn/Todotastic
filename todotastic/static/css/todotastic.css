@@ -5,3 +5,7 @@
 .todo-completion-button {
   text-align: right;
 }
+
+.inline-form {
+  display: inline;
+}
