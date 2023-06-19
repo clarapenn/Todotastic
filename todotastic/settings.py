@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "todo",
+    "django_registration",
 ]
 
 MIDDLEWARE = [
@@ -55,7 +56,7 @@ ROOT_URLCONF = "todotastic.urls"
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [],
+        "DIRS": [BASE_DIR / "templates"],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
@@ -130,3 +131,13 @@ STATIC_URL = "/static/"
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+# Django registration
+
+ACCOUNT_ACTIVATION_DAYS = 7  # One-week activation window
+
+# For now, after signing in, go to the root page, which is the todo list
+LOGIN_REDIRECT_URL = "/"
+
+# Send email to the runserver output for now (local dev)
+EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
