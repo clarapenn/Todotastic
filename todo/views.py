@@ -11,7 +11,10 @@ def list_todos(request):
 
     template_name = "todo/list_todos.html"
 
-    todos = Todo.objects.filter(owner=request.user).order_by("-date_created")
+    todos = Todo.objects.filter(owner=request.user).order_by(
+        "priority",
+        "date_created",
+    )
 
     all_todos_count = todos.count()  # effectively same as Todo.objects.all().count()
 

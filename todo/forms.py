@@ -8,7 +8,12 @@ class TodoForm(forms.ModelForm):
         # in Django, a Meta class is used to define configurable options
         # that the class needs - eg which Model we are making a Form for, in this case
         model = Todo
-        exclude = ("id",)  # ie, we don't want to be able to edit the id of the Todo
+        exclude = (
+            "id",
+            "owner",
+            "completed",
+            "date_completed",
+        )  # ie, we don't want to be able to edit the id of the Todo
 
     def __init__(self, *args, **kwargs):
         # First, call the real constructor from the base class, so that
@@ -38,7 +43,7 @@ class TodoForm(forms.ModelForm):
         # Let's specify manually which class to add to which field:
 
         self.fields["task"].widget.attrs.update({"class": "form-control"})
-        self.fields["completed"].widget.attrs.update({"class": "form-check-input"})
+        self.fields["priority"].widget.attrs.update({"class": "form-select"})
 
 
 class CompletionForm(forms.ModelForm):

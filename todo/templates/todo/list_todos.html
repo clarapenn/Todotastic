@@ -20,9 +20,8 @@
                             </form>
                         </div>
                         <div class="col-5">
-                            <a class="fs-5" href="{% url "todo-detail" todo.id %}">
-                                {{ todo.task|truncatechars:90 }}
-                            </a>
+                            <a class="fs-5" href="{% url "todo-detail" todo.id %}">{{ todo.task|truncatechars:90 }}</a>
+                            <span>({{todo.get_priority_display}})</span>
                         </div>
                         <div class="col-6 todo-completion-button">
                             {% if todo.completed %}
@@ -49,6 +48,9 @@
                 <li class="list-group-item">No to-dos!</li>
             {% endfor %}
             </ul>
+            {% if not todos %}
+                {% comment %} Add an image here http://placekitten.com/200/300 {% endcomment %}
+            {% endif %}
         </div>
         <div class="col-4">
             <h3>How's it going?</h3>

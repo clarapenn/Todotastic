@@ -1,17 +1,24 @@
-{% extends "base.html" %} {% block content %}
+{% extends "base.html" %}
+
+
+{% block content %}
 
 <h1>
-    {% if todo %}Edit this todo
-
-    {% else %}Add a new todo
-
-    {% endif %}
+  {% if todo %}
+    Edit this todo
+  {% else %}
+    Add a new todo
+  {% endif %}
 </h1>
-
-
-<form action="" method="post">
-  {% csrf_token %} {{ form.as_p }}
-
-  <button type="submit">Save</button>
-</form>
+<div class="container">
+  <div class="row">
+    <div class="col-8">
+      <form action="" method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button class="btn btn-primary" type="submit">Save</button>
+      </form>
+    </div>
+  </div>
+</div>
 {% endblock content %}

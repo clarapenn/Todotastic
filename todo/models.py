@@ -6,6 +6,19 @@ from django.db import models
 
 
 class Todo(models.Model):
+    TODO_CRITICAL = 1
+    TODO_URGENT = 2
+    TODO_IMPORTANT = 3
+    TODO_MEDIUM = 4
+    TODO_NEUTRAL = 5
+
+    PRIORITY_CHOICES = [
+        (TODO_CRITICAL, "Critical"),
+        (TODO_URGENT, "Urgent"),
+        (TODO_IMPORTANT, "Important"),
+        (TODO_MEDIUM, "Medium"),
+        (TODO_NEUTRAL, "Neutral"),
+    ]
     task = models.CharField(
         max_length=1000,
         help_text="e.g wash car",
@@ -17,6 +30,10 @@ class Todo(models.Model):
         User,
         on_delete=models.CASCADE,
         null=True,
+    )
+    priority = models.IntegerField(
+        choices=PRIORITY_CHOICES,
+        default=TODO_NEUTRAL,
     )
 
     def __str__(self):
