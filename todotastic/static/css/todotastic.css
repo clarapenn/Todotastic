@@ -9,3 +9,7 @@
 .inline-form {
   display: inline;
 }
+
+.detail_li {
+  padding-top: 6;
+}

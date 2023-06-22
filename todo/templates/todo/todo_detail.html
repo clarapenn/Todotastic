@@ -1,19 +1,37 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div>
-  <p>{{ todo.task }}</p>
-  <span>Completed? {{ todo.completed|yesno }}</span>
-  <span>Date completed {{ todo.date_completed|date }}</span>
-  <span>Date created {{ todo.date_created|date }}</span>
-</div>
+<div class="container">
+    <div class="row">
+        <div class="col-8">
+            {% if todo.completed %}
+            <div class="mt-3">
+                <span class="fs-3 badge rounded-pill text-bg-success">Done!</span>
+            </div>
+            {% endif %}
 
-<ul>
-    <li>
-        <a href="{% url "todo-list" %}">back to list</a>
-    </li>
-    <li>
-        <a href="{% url "todo-edit" todo.id %}">edit this todo</a>
-    </li>
-</ul>
+            <h2 class="my-5">{{ todo.task }}</h2>
+
+            {% if todo.completed %}
+            <span class="badge rounded-pill text-bg-info p-2 my-3">Completed on {{ todo.date_completed|date }}</span>
+            {% else %}
+            <span class="badge rounded-pill text-bg-info p-2 my-3">Date created {{ todo.date_created|date }}</span>
+            {% endif %}
+
+            <ul>
+                <li class="detail_li">
+                    <a href="{% url "todo-list" %}">Back to list</a>
+                </li>
+                <li class="detail_li">
+                    <a href="{% url "todo-edit" todo.id %}">Edit this todo</a>
+                </li>
+            </ul>
+        </div>
+        {% comment %}
+        <div class="col-4">
+           To come - something interesting?
+        </div>
+        {% endcomment %}
+    </div>
+</div>
 {% endblock content%}
