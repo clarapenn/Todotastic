@@ -102,6 +102,12 @@ def todo_add_edit(request, todo_id=None):
                 saved_todo.owner = request.user
             saved_todo.save()
 
+            # In case this was saved as Critical, go and downgrade any other critical todos
+            downgraded_todo = saved_todo.refresh_priorities()
+            if downgraded_todo and downgraded_todo.completed is False:
+                # Let's update the message to say which incomplete Todo was downgraded:
+                success_message += f" (Downgraded '{downgraded_todo.task}' to Urgent)"
+
             messages.success(request, success_message, extra_tags="alert alert-success")
             # After editing, send the user to a page where they can see the result
             return redirect(*redirect_args)

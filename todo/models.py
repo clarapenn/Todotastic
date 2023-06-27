@@ -58,3 +58,30 @@ class Todo(models.Model):
             return True
 
         return False
+
+    def refresh_priorities(self):
+        """If this Todo is marked as critical, make sure it's the only critical one.
+        Return the Downgraded todo after the work is done."""
+
+        downgraded_todo = None
+
+        if self.priority == self.TODO_CRITICAL:
+            other_critical_todos = Todo.objects.exclude(id=self.id).filter(
+                priority=self.TODO_CRITICAL
+            )
+            # other_critical_todos will be a queryset with 0 or 1 things in it,
+            # and so we can safely get that with the .first() method, which
+            # returns the todo or None
+            downgraded_todo = other_critical_todos.first()
+            # We need to get this ^^ before we change it in the database, because
+            # then it won't be in the queryset results after the update()
+
+            # Two ways to update multiple records/rows:
+            # 1. Queryset.update() does it in one hit
+            other_critical_todos.update(priority=self.TODO_URGENT)
+            # 2. Or we can loop through and deal with each one manually:
+            # downgraded_todo_count = len(other_critical_todos)
+            # for other_todo in other_critical_todos:
+            #     other_todo.priority = TODO_URGENT
+            #     other_todo.save()
+        return downgraded_todo
