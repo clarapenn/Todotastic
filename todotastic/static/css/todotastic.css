@@ -7,7 +7,7 @@
 }
 
 .inline-form {
-  display: inline;
+  display: inline-block;
 }
 
 .detail_li {

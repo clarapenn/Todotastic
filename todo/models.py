@@ -26,6 +26,8 @@ class Todo(models.Model):
     completed = models.BooleanField(default=False)
     date_created = models.DateTimeField(auto_now_add=True)
     date_completed = models.DateTimeField(null=True, blank=True)
+    date_due = models.DateTimeField(null=True, blank=True)
+
     owner = models.ForeignKey(
         User,
         on_delete=models.CASCADE,
@@ -48,3 +50,11 @@ class Todo(models.Model):
         self.completed = False
         self.date_completed = None
         self.save()
+
+    def is_overdue(self):
+        today = datetime.date.today()
+        # This is currently ONLY comparing dates. TODO: make it compare timezone-aware datetimes
+        if self.date_due and self.date_due.date() < today:
+            return True
+
+        return False

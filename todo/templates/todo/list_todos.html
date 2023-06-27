@@ -19,11 +19,20 @@
                                 <button type="submit" class="btn btn-outline-secondary btn-sm">X</button>
                             </form>
                         </div>
-                        <div class="col-5">
+                        <div class="col-7">
                             <a class="fs-5" href="{% url "todo-detail" todo.id %}">{{ todo.task|truncatechars:90 }}</a>
+                            {% if todo.date_due and not todo.completed %}
+                            <span title="{% if todo.is_overdue %} OVERDUE! {% else %} Due {% endif %}{{todo.date_due|date}}">
+                                {% if todo.is_overdue %}
+                                💥
+                                {% else %}
+                                ⏰
+                                {% endif %}
+                            </span>
+                            {% endif %}
                             <span>({{todo.get_priority_display}})</span>
                         </div>
-                        <div class="col-6 todo-completion-button">
+                        <div class="col-4 todo-completion-button">
                             {% if todo.completed %}
                             <span>
                                 Done on {{ todo.date_completed|date|default:"who knows!" }}

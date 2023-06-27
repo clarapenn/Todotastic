@@ -8,12 +8,14 @@ class TodoForm(forms.ModelForm):
         # in Django, a Meta class is used to define configurable options
         # that the class needs - eg which Model we are making a Form for, in this case
         model = Todo
-        exclude = (
-            "id",
-            "owner",
-            "completed",
-            "date_completed",
-        )  # ie, we don't want to be able to edit the id of the Todo
+        fields = (
+            "task",
+            "date_due",
+            "priority",
+        )
+        # it's better to be explicit about what we want, rather than just exclude what we don't want
+        # because excluding a fixed list of fields means new fields on the model would appear in the
+        # form unless they are added to an exclude clause
 
     def __init__(self, *args, **kwargs):
         # First, call the real constructor from the base class, so that
