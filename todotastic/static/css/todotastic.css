@@ -13,3 +13,23 @@
 .detail_li {
   padding-top: 6;
 }
+
+.navbar-brand {
+  font-size: 3rem;
+  color: rgb(41, 186, 231);
+}
+
+.secondary_header {
+  color: rgb(41, 186, 231);
+}
+
+.done_red {
+  color: #f3969a;
+}
+
+.todo_green {
+  color: #78c2ad;
+}
+.btn_done {
+  background-color: #f3969a;
+}

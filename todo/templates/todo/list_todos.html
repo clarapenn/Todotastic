@@ -35,11 +35,10 @@
                         <div class="col-4 todo-completion-button">
                             {% if todo.completed %}
                             <span>
-                                Done on {{ todo.date_completed|date|default:"who knows!" }}
                                 <form action="{% url 'todo-complete-toggle' todo.id %}" class="inline-form" method="POST">
                                     {% csrf_token %}
                                     <input type="hidden" name="id" value={{todo.id}}>
-                                    <button class="btn btn-secondary btn-sm">Undo</button>
+                                    <button title='Done on {{ todo.date_completed|date|default:"who knows!" }}' class="btn btn-secondary btn-sm">Undo</button>
                                 </form>
                             </span>
                             {% else %}
@@ -62,16 +61,16 @@
             {% endif %}
         </div>
         <div class="col-4">
-            <h3>How's it going?</h3>
+            <h3 class="secondary_header">How's it going?</h3>
             <p>Progress so far:</p>
             <span class="progress" role="progressbar" aria-label="Basic example" aria-valuenow="{{percentage_complete}}" aria-valuemin="0" aria-valuemax="100">
                 <span class="progress-bar" style="width: {{percentage_complete}}%">{{percentage_complete}}%</span>
             </span>
             <div class="text-center mt-5">
                 <div class="fs-3">Total left</div>
-                <div class="fs-1 fw-bolder">{{incomplete_todos_count}}</div>
+                <div class="fs-1 fw-bolder todo_green">{{incomplete_todos_count}}</div>
                 <div class="fs-3">Total done</div>
-                <div class="fs-1 fw-bolder">{{completed_todos_count}}</div>
+                <div class="fs-1 fw-bolder done_red">{{completed_todos_count}}</div>
             </div>
         </div>
     </div>
