@@ -1,2 +1,3 @@
 Django
 django-registration==3.3
+python-dotenv
