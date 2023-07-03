@@ -10,20 +10,23 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 
+import os
+from dotenv import load_dotenv
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+load_dotenv(BASE_DIR / ".env")
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = "django-insecure-l$n&u^fi#a3one8fe_6%vyx@t@(dg3238u!=tw)z-+bjttusre"
+SECRET_KEY = os.getenv("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.getenv("DEBUG", True)
 
 ALLOWED_HOSTS = []
 
@@ -139,5 +142,18 @@ ACCOUNT_ACTIVATION_DAYS = 7  # One-week activation window
 # For now, after signing in, go to the root page, which is the todo list
 LOGIN_REDIRECT_URL = "/"
 
-# Send email to the runserver output for now (local dev)
-EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
+# Email setup
+if (
+    os.getenv("EMAIL_HOST")
+    and os.getenv("EMAIL_HOST_PASSWORD")
+    and os.getenv("EMAIL_HOST_USER")
+):
+    print("Using SMTP email")
+    EMAIL_HOST = os.getenv("EMAIL_HOST")
+    EMAIL_HOST_USER = os.getenv("EMAIL_HOST_USER")
+    EMAIL_HOST_PASSWORD = os.getenv("EMAIL_HOST_PASSWORD")
+    EMAIL_PORT = 587
+    EMAIL_USE_TLS = True
+else:
+    print("Warning! Using console backend for email!")
+    EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
