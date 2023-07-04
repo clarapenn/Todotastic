@@ -131,6 +131,9 @@ STATICFILES_DIRS = [
     / "todotastic"
     / "static"
 ]
+
+STATIC_ROOT = BASE_DIR / "static"
+
 STATIC_URL = "/static/"
 
 # Default primary key field type
