@@ -46,6 +46,7 @@ class TodoForm(forms.ModelForm):
 
         self.fields["task"].widget.attrs.update({"class": "form-control"})
         self.fields["priority"].widget.attrs.update({"class": "form-select"})
+        # self.fields["date_due"].widget = forms.SelectDateWidget()
 
 
 class CompletionForm(forms.ModelForm):

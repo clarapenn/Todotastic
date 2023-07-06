@@ -1,3 +1,4 @@
 Django
 django-registration==3.3
 python-dotenv
+django-widget-tweaks

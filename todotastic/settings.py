@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "todo",
     "django_registration",
+    "widget_tweaks",
 ]
 
 MIDDLEWARE = [
